@@ -13,7 +13,7 @@ declare(strict_types=1);
  ];
 
  $cuenta = contarPorCiclo($curriculos);
- $total  = count($curriculos);
+ $total  = 0;
  ?>
  <!DOCTYPE html>
  <html lang="es">

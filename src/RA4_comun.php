@@ -77,3 +77,24 @@ declare(strict_types=1);
          'SMR'  => new Ciclo(4, 'SMR', 'Sistemas Microinformáticos y Redes', Ciclo::GRADO_MEDIO),
      ];
  }
+  /*
+  * Como exigirLogin(), pero además exige un rol. Si el usuario no lo tiene,
+  * responde 403 (prohibido) y termina.
+  *
+  * @return array{email: string, firstName: string, lastName: string, rol: string}
+  */
+ function exigirRol(string $rol): array
+ {
+
+    // Verificar si el usuario esta Logeado
+     $usuario = exigirLogin();
+
+     //Si el usuario no es del rol indicado no puede entrar.
+     if ($usuario['rol'] !== $rol) {
+         http_response_code(403);
+         //Admite un texto, que se envía como cuerpo de la respuesta antes de terminar.
+         exit('No tienes permiso para ver esta página.');
+     }
+
+     return $usuario;
+ }

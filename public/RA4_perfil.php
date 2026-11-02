@@ -41,9 +41,6 @@ En lugar de credenciales, se utiliza un sistema de tokens aleatorios de un solo 
 En el Cliente (Cookie):
 Cuando el usuario marca "Recordarme", el servidor genera un token aleatorio criptográficamente fuerte. Este token se envía al navegador y se almacena en una cookie con los atributos de seguridad HttpOnly (invisible para JavaScript), Secure (solo viaja por HTTPS) y SameSite (mitiga CSRF).
 En el Servidor (Base de datos):
-El servidor nunca guarda el token tal cual. Siguiendo el principio de las contraseñas, calcula el HASH del token (por ejemplo, usando SHA-256 o bcrypt) y almacena ese hash asociado al ID del usuario. De este modo, si la base de datos del servidor se filtra, los atacantes no obtendrán los tokens válidos.
-
-
 
  */
  ?>
@@ -64,6 +61,12 @@ El servidor nunca guarda el token tal cual. Siguiendo el principio de las contra
    <p>Email: <?= e($usuario['email']) ?></p>
    <p>Rol: <?= e($usuario['rol']) ?></p>
 
+
+  <!-- Validamos que el hiperenlace hacia la página solo salga si tu rol es alumno
+   (Aunque seas docente y lo escribas a mano no sirve de nada ya que con exigirrol() prohibimos la entrada.) -->
+  <?php if ($usuario['rol'] === 'alumno'): ?>
+   <p><a href="RA4_miCurriculo.php">Mi currículo</a></p>
+  <?php endif; ?>
    <form action="RA4_logout.php" method="post">
      <button type="submit">Cerrar sesión</button>
    </form>
